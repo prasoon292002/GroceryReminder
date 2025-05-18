@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Grocery Reminder</string>
+    <string name="add_item">Add Item</string>
+    <string name="view_list">View List</string>
+    <string name="save">Save</string>
+    <string name="item_name_hint">Enter item name</string>
+    <string name="quantity_hint">Quantity</string>
+    <string name="empty_list">Your grocery list is empty</string>
+    <string name="add_more">Add More Items</string>
+    <string name="notification_title">You\'re near a grocery store!</string>
+    <string name="notification_text">Don\'t forget to buy your grocery items</string>
+</resources>
