@@ -43,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         checkAndRequestPermissions();
+        Button mapButton = findViewById(R.id.mapButton);
+        mapButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, MapActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void checkAndRequestPermissions() {
