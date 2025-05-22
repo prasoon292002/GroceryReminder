@@ -39,7 +39,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private static final String TAG = "MapActivity";
 
     // Replace this with your actual Google Maps + Places API key
-    private static final String API_KEY = "AIzaSyAtuRjuo-r4hRv1e27U4PmNOSPDdIFlk2g";
+    private static final String API_KEY = "AIzaSyA2J3Li2keWgDAOjgS8IQaP61Ta3CwxCrs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

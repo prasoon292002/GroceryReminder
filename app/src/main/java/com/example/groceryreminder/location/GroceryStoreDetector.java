@@ -17,8 +17,8 @@ import org.json.JSONObject;
 public class GroceryStoreDetector {
     private static final String TAG = "GroceryStoreDetector";
     private static final String PLACES_API_BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-    private static final String API_KEY = "AIzaSyAtuRjuo-r4hRv1e27U4PmNOSPDdIFlk2g"; // Replace with your actual API key
-    private static final int SEARCH_RADIUS = 500; // Search radius in meters
+    private static final String API_KEY = "AIzaSyA2J3Li2keWgDAOjgS8IQaP61Ta3CwxCrs"; // Replace with your actual API key
+    private static final int SEARCH_RADIUS = 5000; // Search radius in meters
 
     private RequestQueue requestQueue;
 

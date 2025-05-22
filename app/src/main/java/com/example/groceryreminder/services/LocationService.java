@@ -87,10 +87,10 @@ public class LocationService extends Service {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                // Get active grocery items
-                List<GroceryItem> items = db.groceryDao().getAllItemsSync();
+                // Get ONLY active (incomplete) grocery items
+                List<GroceryItem> activeItems = db.groceryDao().getAllActiveItemsSync();
 
-                if (!items.isEmpty()) {
+                if (!activeItems.isEmpty()) {
                     // Check if there are grocery stores nearby
                     storeDetector.detectNearbyGroceryStores(
                             location.getLatitude(),
@@ -98,14 +98,17 @@ public class LocationService extends Service {
                             new GroceryStoreDetector.StoreDetectionCallback() {
                                 @Override
                                 public void onStoreFound(String storeName, double distance) {
-                                    // Send notification to user
+                                    // Send notification to user with only active items
                                     notificationManager.showGroceryReminderNotification(
-                                            storeName, items);
+                                            storeName, activeItems);
                                 }
 
                                 @Override
                                 public void onNoStoresFound() {
                                     Log.d(TAG, "No stores found nearby");
+                                    // Cancel any existing grocery reminder notifications
+                                    // since we're not near a store
+                                    notificationManager.cancelGroceryReminderNotification();
                                 }
 
                                 @Override
@@ -113,6 +116,10 @@ public class LocationService extends Service {
                                     Log.e(TAG, "Error detecting stores: " + errorMessage);
                                 }
                             });
+                } else {
+                    // No active items, cancel any existing grocery reminder notifications
+                    Log.d(TAG, "No active grocery items, canceling notifications");
+                    notificationManager.cancelGroceryReminderNotification();
                 }
             }
         });

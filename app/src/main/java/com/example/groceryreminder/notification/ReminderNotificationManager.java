@@ -14,6 +14,7 @@ import com.example.groceryreminder.R;
 import com.example.groceryreminder.data.GroceryItem;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class ReminderNotificationManager {
     private static final String CHANNEL_ID = "grocery_reminders";
@@ -42,25 +43,40 @@ public class ReminderNotificationManager {
     }
 
     public void showGroceryReminderNotification(String storeName, List<GroceryItem> items) {
+        // Filter out completed items to ensure we only show active items
+        List<GroceryItem> activeItems = new ArrayList<>();
+        for (GroceryItem item : items) {
+            if (!item.isCompleted()) {
+                activeItems.add(item);
+            }
+        }
+
+        // Don't show notification if no active items
+        if (activeItems.isEmpty()) {
+            // Cancel any existing notification since there are no active items
+            notificationManager.cancel(NOTIFICATION_ID);
+            return;
+        }
+
         // Create intent to open grocery list
         Intent intent = new Intent(context, GroceryListActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
-        // Build content text based on items
+        // Build content text based on active items only
         StringBuilder contentText = new StringBuilder();
-        int itemCount = Math.min(items.size(), 3); // Show max 3 items
+        int itemCount = Math.min(activeItems.size(), 3); // Show max 3 items
 
         for (int i = 0; i < itemCount; i++) {
-            contentText.append("• ").append(items.get(i).getName());
-            if (items.get(i).getQuantity() > 1) {
-                contentText.append(" (").append(items.get(i).getQuantity()).append(")");
+            contentText.append("• ").append(activeItems.get(i).getName());
+            if (activeItems.get(i).getQuantity() > 1) {
+                contentText.append(" (").append(activeItems.get(i).getQuantity()).append(")");
             }
             contentText.append("\n");
         }
 
-        if (items.size() > 3) {
-            contentText.append("• and ").append(items.size() - 3).append(" more...");
+        if (activeItems.size() > 3) {
+            contentText.append("• and ").append(activeItems.size() - 3).append(" more...");
         }
 
         // Build notification
@@ -76,5 +92,10 @@ public class ReminderNotificationManager {
 
         // Show notification
         notificationManager.notify(NOTIFICATION_ID, builder.build());
+    }
+
+    // Add method to cancel notification when no active items remain
+    public void cancelGroceryReminderNotification() {
+        notificationManager.cancel(NOTIFICATION_ID);
     }
 }

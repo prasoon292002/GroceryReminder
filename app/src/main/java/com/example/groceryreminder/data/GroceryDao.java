@@ -25,4 +25,8 @@ public interface GroceryDao {
 
     @Query("SELECT * FROM grocery_items")
     List<GroceryItem> getAllItemsSync();
+
+    // Add this method to get only active items synchronously for notifications
+    @Query("SELECT * FROM grocery_items WHERE completed = 0")
+    List<GroceryItem> getAllActiveItemsSync();
 }
