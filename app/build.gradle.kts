@@ -68,5 +68,6 @@ dependencies {
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.google.android.libraries.places:places:3.3.0")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.27")
 
 }
